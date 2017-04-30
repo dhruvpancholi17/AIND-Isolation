@@ -45,9 +45,20 @@ def custom_score(game, player):
     if game.is_winner(player):
         return float("inf")
 
-    # Evaluation function is the number of possible moves by the
+    # Evaluation function is the number of possible moves by the current player
+    return float(len(game.get_legal_moves(player)))
+
     # current player - opponent player
+
     return float(len(game.get_legal_moves(player)) - len(game.get_legal_moves(game.get_opponent(player))))
+
+
+    # Used for measuring the distance between the location of two players
+    opponent_location = game.get_player_location(game.get_opponent(player))
+    player_location = game.get_player_location(player)
+    
+    return float(len(game.get_legal_moves(player)) - len(game.get_legal_moves(game.get_opponent(player))) + abs(
+        opponent_location[1] - player_location[1]) + abs(opponent_location[0] - player_location[0]))
 
 
 class CustomPlayer:
